@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  audit-database:
+    image: postgres:9-alpine
+    container_name: audit-database
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+  auditsystem:
+    image: sdugroup11/auditsystem
+    container_name: auditsystem
+    depends_on:
+      - audit-database
+    links:
+      - audit-database
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://audit-database:5432/postgres
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - 8080:8080

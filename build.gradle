@@ -43,6 +43,7 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
 	compile("com.h2database:h2:1.4.196")
+	compile("org.springframework.retry:spring-retry")
 	runtime('org.postgresql:postgresql')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.junit.vintage:junit-vintage-engine:4.12.1')

@@ -9,4 +9,9 @@ RUN gradle clean build
 
 FROM openjdk:8-jre-alpine
 COPY --from=0 /home/gradle/project/build/libs/auditsystem-0.0.1-SNAPSHOT.jar /usr/bin/auditsystem-0.0.1-SNAPSHOT.jar
+ENV SPRING_DATASOURCE_URL=jdbc:postgresql://audit-database:5432/postgres \
+    SPRING_DATASOURCE_USERNAME=postgres \
+    SPRING_DATASOURCE_PASSWORD=postgres \
+    SPRING_JPA_GENERATE-DDL=true
+EXPOSE 8080
 CMD ["java", "-jar", "/usr/bin/auditsystem-0.0.1-SNAPSHOT.jar"]
