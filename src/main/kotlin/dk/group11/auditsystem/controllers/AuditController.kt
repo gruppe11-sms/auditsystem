@@ -5,15 +5,20 @@ import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
 import dk.group11.auditsystem.models.Filters
 import dk.group11.auditsystem.services.IAuditService
+import dk.group11.auditsystem.security.ISecurityService
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/auditentry")
-class AuditController(val auditService: IAuditService) {
+class AuditController(val auditService: IAuditService, val security: ISecurityService) {
+
+
 
     @PostMapping
     fun createEntry(@RequestBody entry: AuditEntry): AuditEntry {
-        return auditService.createEntry(entry)
+        val requestEntry = entry.copy(userId = security.getId())
+        println(requestEntry)
+        return auditService.createEntry(requestEntry)
     }
 
     @GetMapping

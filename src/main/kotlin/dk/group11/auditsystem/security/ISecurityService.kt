@@ -1,4 +1,4 @@
-package dk.group11.auditsystem.services
+package dk.group11.auditsystem.security
 
 import org.springframework.security.core.Authentication
 

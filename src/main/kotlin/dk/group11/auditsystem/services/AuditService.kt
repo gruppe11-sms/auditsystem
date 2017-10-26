@@ -4,10 +4,9 @@ import dk.group11.auditsystem.client.RoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
 import dk.group11.auditsystem.models.Filters
-import dk.group11.auditsystem.models.User
 import dk.group11.auditsystem.repositories.AuditRepository
+import dk.group11.auditsystem.security.ISecurityService
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
 class AuditService(private val auditRepository: AuditRepository, private val security: ISecurityService, private val rolesystem: RoleSystemClient) : IAuditService {

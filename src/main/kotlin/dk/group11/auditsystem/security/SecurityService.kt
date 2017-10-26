@@ -1,6 +1,5 @@
-package dk.group11.auditsystem.services
+package dk.group11.auditsystem.security
 
-import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
@@ -8,6 +7,9 @@ import org.springframework.stereotype.Service
 class SecurityService : ISecurityService {
 
     override fun getId(): Long {
-        return 4
+        return principal.id
     }
+
+    val principal: UserData
+        get() = SecurityContextHolder.getContext().authentication.principal as UserData
 }
