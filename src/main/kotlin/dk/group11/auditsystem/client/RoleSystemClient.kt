@@ -17,9 +17,9 @@ private class UserDeserializer : ResponseDeserializable<Map<String, String>> {
 
 
 @Service
-class RoleSystemClient(val config: ConfigProperties) {
+class RoleSystemClient(val config: ConfigProperties) : IRoleSystemClient {
 
-    fun getUsers(userIds: List<Long>, authToken : String): List<User> {
+    override fun getUsers(userIds: List<Long>, authToken : String): List<User> {
         val ids = userIds.joinToString(separator = ",")
 
         val (request, response, result) = Fuel.get("${config.roleSystemUrl}/api/users/names", listOf(Pair("userIds", ids)))

@@ -1,5 +1,6 @@
 package dk.group11.auditsystem.services
 
+import dk.group11.auditsystem.client.IRoleSystemClient
 import dk.group11.auditsystem.client.RoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
@@ -9,7 +10,7 @@ import dk.group11.auditsystem.security.ISecurityService
 import org.springframework.stereotype.Service
 
 @Service
-class AuditService(private val auditRepository: AuditRepository, private val security: ISecurityService, private val rolesystem: RoleSystemClient) : IAuditService {
+class AuditService(private val auditRepository: AuditRepository, private val rolesystem: IRoleSystemClient) : IAuditService {
     override fun createEntry(entry: AuditEntry): AuditEntry {
         return auditRepository.save(entry)
     }
