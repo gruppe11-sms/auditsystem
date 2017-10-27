@@ -20,7 +20,7 @@ class AuditClientTest {
         client.createEntry(action = "testLong", data = 2L, authToken = authToken)
         client.createEntry(action = "testDouble", data = 3.5, authToken = authToken)
         client.createEntry(action = "testObject", data = Testdata(1,"hello"), authToken = authToken)
-
+        client.createEntry(action = "testDumb", data = true, authToken = authToken)
 
 
 
