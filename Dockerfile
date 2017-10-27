@@ -13,5 +13,5 @@ ENV SPRING_DATASOURCE_URL=jdbc:postgresql://audit-database:5432/postgres \
     SPRING_DATASOURCE_USERNAME=postgres \
     SPRING_DATASOURCE_PASSWORD=postgres \
     SPRING_JPA_GENERATE-DDL=true
-EXPOSE 8080
+EXPOSE 8086
 CMD ["java", "-jar", "/usr/bin/auditsystem-0.0.1-SNAPSHOT.jar"]
