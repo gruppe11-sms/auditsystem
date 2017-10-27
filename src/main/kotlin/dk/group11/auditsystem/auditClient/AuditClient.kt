@@ -13,14 +13,11 @@ class AuditClient(val auditConfigProperties: AuditConfigProperties) {
 
     fun createEntry(action: String, data: Any, authToken: String) {
         val json = getJson(action, data)
-        println(json)
         val (request, response, result) = Fuel.post(auditConfigProperties.url + "/api/auditentry")
                 .header(Pair(HEADER_STRING, authToken))
                 .header(Pair("Content-Type", "application/json"))
                 .body(json)
                 .responseString()
-
-        println(result)
     }
 
     private fun getJson(action: String, data: Any): String {

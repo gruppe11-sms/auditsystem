@@ -17,7 +17,6 @@ class AuditController(val auditService: IAuditService, val security: ISecuritySe
     @PostMapping
     fun createEntry(@RequestBody entry: AuditEntry): AuditEntry {
         val requestEntry = entry.copy(userId = security.getId())
-        println(requestEntry)
         return auditService.createEntry(requestEntry)
     }
 
