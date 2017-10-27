@@ -2,12 +2,10 @@ package dk.group11.auditsystem.services
 
 import dk.group11.auditsystem.auditClient.AuditClient
 import dk.group11.auditsystem.client.IRoleSystemClient
-import dk.group11.auditsystem.client.RoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
 import dk.group11.auditsystem.models.Filters
 import dk.group11.auditsystem.repositories.AuditRepository
-import dk.group11.auditsystem.security.ISecurityService
 import org.springframework.stereotype.Service
 
 class getAllEntriesAuditData(val action: String, val userId: Long)
@@ -17,7 +15,7 @@ class AuditService(
         private val auditRepository: AuditRepository,
         private val rolesystem: IRoleSystemClient,
         private val auditClient: AuditClient
-        ) : IAuditService {
+) : IAuditService {
     override fun createEntry(entry: AuditEntry): AuditEntry {
         return auditRepository.save(entry)
     }
@@ -25,7 +23,7 @@ class AuditService(
     override fun getAllEntries(type: String, userId: Long, authToken: String): List<AuditEntryWithName> {
         auditClient.createEntry("[AuditSystem] Get Entries", getAllEntriesAuditData(type, userId), authToken)
 
-        var entries = auditRepository.findAll()
+        var entries = auditRepository.findAll().toList()
                 .filter { type.isEmpty() || it.action.equals(type, ignoreCase = true) }
                 .filter { userId == 0L || it.userId == userId }
 
