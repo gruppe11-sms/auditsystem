@@ -1,5 +1,7 @@
 package dk.group11.auditsystem.services
 
+import com.nhaarman.mockito_kotlin.any
+import dk.group11.auditsystem.auditClient.AuditClient
 import dk.group11.auditsystem.client.IRoleSystemClient
 import dk.group11.auditsystem.client.RoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
@@ -35,7 +37,10 @@ internal class AuditServiceTest {
         Mockito.`when`(client.getUsers(Mockito.anyList() as List<Long>, Mockito.anyString())).then {
             listOf(User(2, "testuser"))
         }
-        auditService = AuditService(auditRepository, client)
+        val auditClient = Mockito.mock(AuditClient::class.java)
+        Mockito.`when`(auditClient.createEntry(Mockito.anyString(), any(), Mockito.anyString())).then {
+        }
+        auditService = AuditService(auditRepository, client, auditClient)
     }
 
     @Test
