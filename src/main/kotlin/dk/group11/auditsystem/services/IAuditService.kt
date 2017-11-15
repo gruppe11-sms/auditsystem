@@ -6,6 +6,6 @@ import dk.group11.auditsystem.models.Filters
 
 interface IAuditService {
     fun createEntry(entry: AuditEntry): AuditEntry
-    fun getAllEntries(type: String = "", userId: Long = 0, authToken: String): List<AuditEntryWithName>
+    fun getAllEntries(type: String = "", userId: Long = 0): List<AuditEntryWithName>
     fun getFilters(authToken: String): Filters
 }

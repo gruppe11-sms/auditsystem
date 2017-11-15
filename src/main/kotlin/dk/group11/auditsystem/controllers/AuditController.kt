@@ -23,8 +23,8 @@ class AuditController(val auditService: IAuditService, val security: ISecuritySe
     @GetMapping
     fun getAllEntries(
             @RequestParam("action", defaultValue = "") action: String,
-            @RequestParam("userId", defaultValue = "") userId: String,
-            @RequestHeader("Authorization") auth: String): List<AuditEntryWithName> {
+            @RequestParam("userId", defaultValue = "") userId: String
+    ): List<AuditEntryWithName> {
         var id = userId.toLongOrNull()
         if (id == null) {
             if (userId.isBlank()) {
@@ -33,7 +33,7 @@ class AuditController(val auditService: IAuditService, val security: ISecuritySe
                 throw BadRequestException("Cannot cast 'userid' to Long")
             }
         }
-        return auditService.getAllEntries(type = action, userId = id, authToken = auth)
+        return auditService.getAllEntries(type = action, userId = id)
     }
 
     @GetMapping("/filters")
