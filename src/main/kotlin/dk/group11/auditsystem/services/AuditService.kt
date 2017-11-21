@@ -1,7 +1,7 @@
 package dk.group11.auditsystem.services
 
-import dk.group11.auditsystem.auditClient.AuditClient
-import dk.group11.auditsystem.client.IRoleSystemClient
+import dk.group11.auditsystem.clients.AuditClient
+import dk.group11.auditsystem.clients.IRoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
 import dk.group11.auditsystem.models.Filters

@@ -9,12 +9,14 @@ import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.jdbc.datasource.AbstractDataSource
 import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.EnableRetry
 import org.springframework.retry.annotation.Retryable
 import java.sql.Connection
 import java.sql.SQLException
 import javax.sql.DataSource
 
 @SpringBootApplication
+@EnableRetry
 class AuditSystemApplication {
     @Order(Ordered.HIGHEST_PRECEDENCE)
     private inner class RetryableDataSourceBeanPostProcessor : BeanPostProcessor {
@@ -44,7 +46,7 @@ fun main(args: Array<String>) {
 }
 
 
-internal class RetryableDataSource(private val delegate: DataSource) : AbstractDataSource() {
+internal open class RetryableDataSource(private val delegate: DataSource) : AbstractDataSource() {
 
     @Retryable(maxAttempts = 10, backoff = Backoff(multiplier = 2.3, maxDelay = 30000))
     @Throws(SQLException::class)

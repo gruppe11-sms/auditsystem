@@ -1,4 +1,4 @@
-package dk.group11.auditsystem.client
+package dk.group11.auditsystem.clients
 
 import dk.group11.auditsystem.models.User
 

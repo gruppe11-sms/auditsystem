@@ -1,19 +1,15 @@
 package dk.group11.auditsystem.services
 
 import com.nhaarman.mockito_kotlin.any
-import dk.group11.auditsystem.auditClient.AuditClient
-import dk.group11.auditsystem.client.IRoleSystemClient
-import dk.group11.auditsystem.client.RoleSystemClient
+import dk.group11.auditsystem.clients.AuditClient
+import dk.group11.auditsystem.clients.IRoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.User
 import dk.group11.auditsystem.repositories.AuditRepository
-import dk.group11.auditsystem.security.ISecurityService
-import dk.group11.auditsystem.security.SecurityService
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
