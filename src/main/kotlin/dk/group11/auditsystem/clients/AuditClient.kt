@@ -9,13 +9,17 @@ import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
 import org.springframework.stereotype.Service
 
-@Service
-class AuditClient(val auditConfigProperties: AuditConfigProperties, private val securityService: SecurityService) {
+interface IAuditClient {
+    fun createEntry(action: String, data: Any)
+}
 
-    fun createEntry(action: String, data: Any, authToken: String = securityService.getToken()) {
+@Service
+class AuditClient(private val auditConfigProperties: AuditConfigProperties, private val securityService: SecurityService) : IAuditClient {
+
+    override fun createEntry(action: String, data: Any) {
         val json = getJson(action, data)
         val (request, response, result) = Fuel.post(auditConfigProperties.url + "/api/auditentry")
-                .header(Pair(HEADER_STRING, authToken))
+                .header(Pair(HEADER_STRING, securityService.getToken()))
                 .header(Pair("Content-Type", "application/json"))
                 .body(json)
                 .responseString()

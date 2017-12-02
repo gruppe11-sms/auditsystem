@@ -1,6 +1,6 @@
 package dk.group11.auditsystem.services
 
-import dk.group11.auditsystem.clients.AuditClient
+import dk.group11.auditsystem.clients.IAuditClient
 import dk.group11.auditsystem.clients.IRoleSystemClient
 import dk.group11.auditsystem.models.AuditEntry
 import dk.group11.auditsystem.models.AuditEntryWithName
@@ -15,7 +15,7 @@ class getAllEntriesAuditData(val action: String, val userId: Long)
 class AuditService(
         private val auditRepository: AuditRepository,
         private val rolesystem: IRoleSystemClient,
-        private val auditClient: AuditClient,
+        private val auditClient: IAuditClient,
         private val securityService: SecurityService
 ) : IAuditService {
     override fun createEntry(entry: AuditEntry): AuditEntry {
