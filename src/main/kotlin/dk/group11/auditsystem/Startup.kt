@@ -17,6 +17,8 @@ import javax.sql.DataSource
 
 @Component
 class Startup(private val roleClient: RoleClient) : ApplicationRunner {
+
+    @Retryable(maxAttempts = 10, backoff = Backoff(multiplier = 2.3, maxDelay = 30000))
     override fun run(args: ApplicationArguments?) {
         roleClient.ensureRole(ViewerRole, "Audit viewer", "Allows to user to view and query audit entries")
     }

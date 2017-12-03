@@ -10,6 +10,7 @@ import com.github.kittinunf.fuel.core.response
 import com.github.kittinunf.result.Result
 import dk.group11.auditsystem.models.User
 import dk.group11.auditsystem.security.HEADER_STRING
+import dk.group11.auditsystem.security.ISecretService
 import dk.group11.auditsystem.security.TOKEN_PREFIX
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.context.annotation.Configuration
@@ -28,7 +29,7 @@ class RequestFailed : RuntimeException()
 private val JsonContentType = Pair("Content-Type", "application/json")
 
 @Service
-class RoleClient(private val roleConfigProperties: RoleConfigProperties) : IRoleSystemClient {
+class RoleClient(private val roleConfigProperties: RoleConfigProperties, private val secretService: ISecretService) : IRoleSystemClient {
 
 
     private object UserType : TypeReference<Map<String, String>>()
@@ -56,9 +57,10 @@ class RoleClient(private val roleConfigProperties: RoleConfigProperties) : IRole
 
     private class loginRequest(val username: String, val password: String) : Jsonable
 
-    @Retryable(backoff = Backoff(delay = 3000))
+    @Retryable(maxAttempts = 3, backoff = Backoff(delay = 3000))
     private fun login() {
-        val requestJson = loginRequest(roleConfigProperties.username, roleConfigProperties.password).toJSON()
+        val systemPassword = String(secretService.get("system_password")).trim()
+        val requestJson = loginRequest(roleConfigProperties.username, systemPassword).toJSON()
         val (_, response, result) = Fuel.post("${roleConfigProperties.url}/login")
                 .header(JsonContentType)
                 .body(requestJson)
@@ -154,8 +156,7 @@ class RoleClient(private val roleConfigProperties: RoleConfigProperties) : IRole
 
 @Configuration
 @ConfigurationProperties(prefix = "role")
-data class RoleConfigProperties(
+class RoleConfigProperties(
         var url: String = "http://localhost:8084",
-        var username: String = "",
-        var password: String = ""
+        var username: String = "system"
 )

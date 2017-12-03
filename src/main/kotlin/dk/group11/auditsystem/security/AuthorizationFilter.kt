@@ -1,8 +1,6 @@
 package dk.group11.auditsystem.security
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.kittinunf.fuel.core.ResponseDeserializable
 import io.jsonwebtoken.Jwts
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
@@ -14,8 +12,8 @@ import javax.servlet.http.HttpServletResponse
 
 data class UserData(var id: Long = 0, var username: String = "")
 
-class AuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticationFilter(authManager) {
 
+class AuthorizationFilter(authManager: AuthenticationManager, val secretService: ISecretService) : BasicAuthenticationFilter(authManager) {
 
     override fun doFilterInternal(req: HttpServletRequest, res: HttpServletResponse, chain: FilterChain) {
         val header = req.getHeader(HEADER_STRING)
@@ -31,10 +29,9 @@ class AuthorizationFilter(authManager: AuthenticationManager) : BasicAuthenticat
     private fun getAuthentication(request: HttpServletRequest): UsernamePasswordAuthenticationToken? {
         val token = request.getHeader(HEADER_STRING)
         val user = Jwts.parser()
-                .setSigningKey(SECRET.toByteArray())
+                .setSigningKey(secretService.get("signing_key"))
                 .parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
-                .body
-                .subject
+                .body.subject
 
         val userData = ObjectMapper().readValue<UserData>(user, UserData::class.java)
 
