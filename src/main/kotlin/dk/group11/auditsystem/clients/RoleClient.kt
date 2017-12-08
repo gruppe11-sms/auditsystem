@@ -51,7 +51,7 @@ class RoleClient(private val roleConfigProperties: RoleConfigProperties, private
 
     }
 
-    private data class createRoleRequest(val key: String, val title: String, val description: String) : Jsonable
+    private data class createRoleRequest(val id: String, val title: String, val description: String) : Jsonable
 
     private var token: String = ""
 
